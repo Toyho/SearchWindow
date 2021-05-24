@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 import 'appBar.dart';
 import 'member.dart';
@@ -7,7 +11,6 @@ import 'strings.dart';
 
 class SearchState extends State<SearchWidget> {
   TextEditingController _controller = new TextEditingController();
-  late String filter;
 
   void _showToast(String nameOrganization) => Fluttertoast.showToast(
       msg: "Выбрано $nameOrganization", toastLength: Toast.LENGTH_SHORT);
@@ -44,6 +47,7 @@ class SearchState extends State<SearchWidget> {
   @override
   void initState() {
     super.initState();
+    _loadData();
   }
 
   @override
@@ -153,16 +157,14 @@ class SearchState extends State<SearchWidget> {
         ));
   }
 
-// _loadData() async {
-//   setState(() {
-//     final membersJSON = jsonDecode(response.body);
-//
-//     for (var memberJSON in membersJSON) {
-//       final member = Member(memberJSON["login"], memberJSON["avatar_url"]);
-//       _members.add(member);
-//     }
-//   });
-// }
+  _loadData() async {
+    setState(() {
+      final membersJSON = json.decode('assets/jsonExample.json');
+      var user = Member.fromJson(membersJSON);
+      print(user);
+    });
+  }
+
 }
 
 class SearchWidget extends StatefulWidget {

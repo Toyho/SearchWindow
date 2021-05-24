@@ -15,4 +15,11 @@ class Member {
           "Received: '$location'");
     }
   }
+
+  Member.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        location = json['location'],
+        online = json['online'],
+        placeType = json['placeType'];
 }
